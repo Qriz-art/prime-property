@@ -1,248 +1,199 @@
-export default function Home() {
+import Image from "next/image";
+import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+import PublicNavbar from "@/components/PublicNavbar";
+
+
+export default async function Home() {
+  const { data } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("status", "in_stock")
+    .order("id", { ascending: false })
+    .limit(6);
+
+  const properties = data || [];
+
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="bg-[#F5F5F5] text-[#1A1A1A]">
+      <PublicNavbar />
 
-      {/* NAVBAR */}
-      <header className="sticky top-0 z-50 bg-[#1A1A1A] text-white border-b border-[#C9A961]">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-
-          {/* LOGO */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#C9A961]"></div>
-
-            <div>
-              <h1 className="font-bold text-lg tracking-wide">
-                PRIME PROPERTY
-              </h1>
-
-              <p className="text-xs text-gray-400">
-                Luxury Real Estate
-              </p>
-            </div>
-          </div>
-
-          {/* MENU */}
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="/" className="hover:text-[#C9A961] transition">
-  Beranda
-</a>
-
-<a href="/about" className="hover:text-[#C9A961] transition">
-  Tentang
-</a>
-
-<a href="/contact" className="hover:text-[#C9A961] transition">
-  Kontak
-</a>
-          </nav>
-
-          <a
-  href="/agent/login"
-  className="border border-[#C9A961] text-[#C9A961] px-5 py-2 rounded-lg hover:bg-[#C9A961] hover:text-black transition"
->
-  Login Agent
-</a>
-
-        </div>
-      </header>
-
-      {/* HERO */}
-      <section className="bg-[#1A1A1A] text-white min-h-[90vh] flex items-center">
-
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-
-          {/* TEXT */}
+      <section className="bg-[#1A1A1A] text-white">
+        <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-12 items-center">
           <div>
-
-            <p className="text-[#C9A961] mb-4 tracking-[4px] uppercase">
-              Prime Property
+            <p className="text-[#C9A961] font-bold tracking-widest mb-4">
+              PRIME PROPERTY
             </p>
 
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-              Temukan
-              <span className="text-[#C9A961]"> Properti </span>
-              Impian Anda
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+              Temukan Hunian Mewah dan Investasi Properti Terbaik
             </h1>
 
-            <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-              Platform properti modern untuk hunian premium,
-              villa, ruko, dan investasi terbaik.
+            <p className="text-gray-300 text-lg mt-6 max-w-xl">
+              Prime Property membantu Anda menemukan villa, ruko, dan hunian
+              premium dengan lokasi strategis, data jelas, dan pengelolaan
+              profesional.
             </p>
 
-            <div className="flex gap-4 flex-wrap">
-
-              <button className="bg-[#C9A961] text-black px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition">
-                Lihat Properti
-              </button>
-
-              <button className="border border-white px-8 py-4 rounded-lg hover:bg-white hover:text-black transition">
-                Hubungi Kami
-              </button>
-
-            </div>
-          </div>
-
-          {/* BOX KANAN */}
-          <div className="flex justify-center">
-
-            <div className="w-full max-w-md h-[400px] rounded-3xl bg-gradient-to-br from-[#C9A961] to-[#1A1A1A] border border-[#C9A961]/30 shadow-2xl flex items-center justify-center">
-
-              <h2 className="text-3xl font-bold text-center">
-                PRIME <br /> PROPERTY
-              </h2>
-
-            </div>
-
-          </div>
-
-        </div>
-            </section>
-
-      {/* PROPERTI UNGGULAN */}
-      <section className="bg-[#F5F5F5] py-20">
-        <div className="max-w-7xl mx-auto px-6">
-
-          <div className="mb-12">
-            <p className="text-[#C9A961] font-semibold uppercase tracking-[3px] mb-3">
-              Highlight
-            </p>
-
-            <h2 className="text-4xl font-bold text-[#1A1A1A]">
-              Properti Unggulan
-            </h2>
-
-            <p className="text-gray-600 mt-3">
-              Pilihan properti terbaik dari Prime Property.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              "Aston Villas",
-              "Banyan Tree Blok A",
-              "Mentari Residence",
-              "Project Ville",
-              "Ruko Cemara Asri",
-              "Villa Krakatau",
-            ].map((nama, index) => (
-              <div
-                key={index}
-                className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl transition"
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href="#properti"
+                className="bg-[#C9A961] text-black px-6 py-3 rounded-xl font-bold"
               >
-                <div className="h-40 rounded-xl bg-[#1A1A1A] mb-5 flex items-center justify-center text-[#C9A961] font-bold">
-                  PRIME PROPERTY
+                Lihat Properti
+              </a>
+
+              <Link
+                href="/contact"
+                className="border border-white/30 px-6 py-3 rounded-xl font-bold"
+              >
+                Hubungi Kami
+              </Link>
+            </div>
+          </div>
+
+          <div className="bg-white/5 border border-[#C9A961]/30 rounded-3xl p-8">
+            <Image
+              src="/prime-logo.png"
+              alt="Prime Property Logo"
+              width={420}
+              height={160}
+              className="bg-white rounded-2xl p-6 mx-auto"
+              priority
+            />
+
+            <div className="grid grid-cols-3 gap-4 mt-8 text-center">
+              <div className="bg-white/10 rounded-2xl p-4">
+                <p className="text-3xl font-bold text-[#C9A961]">
+                  {properties.length}
+                </p>
+                <p className="text-sm text-gray-300">Properti Aktif</p>
+              </div>
+
+              <div className="bg-white/10 rounded-2xl p-4">
+                <p className="text-3xl font-bold text-[#C9A961]">2</p>
+                <p className="text-sm text-gray-300">Tipe Listing</p>
+              </div>
+
+              <div className="bg-white/10 rounded-2xl p-4">
+                <p className="text-3xl font-bold text-[#C9A961]">24/7</p>
+                <p className="text-sm text-gray-300">Support</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="properti" className="max-w-7xl mx-auto px-6 py-20">
+        <div className="flex items-end justify-between gap-6 mb-10">
+          <div>
+            <h2 className="text-3xl font-bold">Properti Unggulan</h2>
+            <p className="text-gray-500 mt-2">
+              Data properti aktif langsung dari sistem internal.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {properties.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm"
+            >
+              <div className="flex justify-between gap-4 mb-4">
+                <div>
+                  <h3 className="text-xl font-bold">{item.nama_property}</h3>
+                  <p className="text-gray-500">{item.group || item.kawasan}</p>
                 </div>
 
-                <h3 className="text-xl font-bold text-[#1A1A1A] mb-2">
-                  {nama}
-                </h3>
+                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm h-fit">
+                  In Stock
+                </span>
+              </div>
 
-                <p className="text-gray-600 mb-4">
-                  Properti premium dengan lokasi strategis dan nilai investasi tinggi.
+              <div className="grid grid-cols-2 gap-3 text-sm text-gray-600 border-y py-4">
+                <p>Ukuran: {item.lebar} x {item.panjang}</p>
+                <p>Hadap: {item.hadap}</p>
+                <p>Tipe: {item.tipe}</p>
+                <p>Tingkat: {item.tingkat} Lt</p>
+                <p>Carport: {item.carport ? "Ada" : "Tidak"}</p>
+                <p>Kawasan: {item.kawasan}</p>
+              </div>
+
+              <div className="mt-5 flex items-center justify-between">
+                <p className="text-[#C9A961] font-bold text-lg">
+                  Rp {Number(item.price).toLocaleString("id-ID")}
                 </p>
 
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#B33A3A]">
-                    Rp 1.350.000.000
-                  </span>
-
-                  <span className="text-sm bg-[#C9A961]/20 text-[#745b1b] px-3 py-1 rounded-full">
-                    In Stock
-                  </span>
-                </div>
+                {item.maps_link && (
+                  <a
+                    href={item.maps_link}
+                    target="_blank"
+                    className="text-sm font-semibold underline"
+                  >
+                    Maps
+                  </a>
+                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
 
+          {properties.length === 0 && (
+            <div className="col-span-full bg-white rounded-2xl p-10 text-center text-gray-500">
+              Belum ada properti aktif.
+            </div>
+          )}
         </div>
-            </section>
+      </section>
 
-      {/* MENGAPA PRIME PROPERTY */}
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center">
+            Mengapa Prime Property?
+          </h2>
 
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-[#C9A961] font-semibold uppercase tracking-[3px] mb-3">
-              Keunggulan
-            </p>
-
-            <h2 className="text-4xl font-bold text-[#1A1A1A] mb-4">
-              Mengapa Prime Property?
-            </h2>
-
-            <p className="text-gray-600">
-              Kami membantu Anda menemukan properti terbaik dengan data yang jelas,
-              proses yang rapi, dan layanan profesional.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-4 gap-6 mt-10">
             {[
-              ["Lokasi Strategis", "Properti berada di area yang potensial dan mudah dijangkau."],
-              ["Data Jelas", "Informasi ukuran, harga, status, dan kawasan disajikan ringkas."],
-              ["Pilihan Premium", "Listing dikurasi untuk kebutuhan hunian maupun investasi."],
-              ["Layanan Cepat", "Tim kami siap membantu proses pencarian properti Anda."],
-            ].map((item, index) => (
+              ["Legalitas Aman", "Data properti dikelola rapi dan transparan."],
+              ["Lokasi Strategis", "Listing berada di kawasan potensial."],
+              ["Harga Kompetitif", "Informasi harga jelas dalam rupiah."],
+              ["Tim Profesional", "Didukung sistem internal agent portal."],
+            ].map((item) => (
               <div
-                key={index}
-                className="bg-[#F5F5F5] rounded-2xl p-6 border border-gray-200 hover:border-[#C9A961] transition"
+                key={item[0]}
+                className="bg-[#F5F5F5] rounded-2xl p-6 border border-gray-200"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#1A1A1A] text-[#C9A961] flex items-center justify-center font-bold mb-5">
-                  {index + 1}
-                </div>
-
-                <h3 className="font-bold text-xl mb-3 text-[#1A1A1A]">
-                  {item[0]}
-                </h3>
-
-                <p className="text-gray-600">
-                  {item[1]}
-                </p>
+                <div className="w-12 h-12 rounded-xl bg-[#C9A961] mb-4" />
+                <h3 className="font-bold text-lg">{item[0]}</h3>
+                <p className="text-gray-600 mt-2">{item[1]}</p>
               </div>
             ))}
           </div>
-
         </div>
-            </section>
+      </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#1A1A1A] text-white py-10">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-
+      <footer className="bg-[#1A1A1A] text-white">
+        <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-6">
           <div>
-            <h2 className="text-2xl font-bold text-[#C9A961]">
-              PRIME PROPERTY
-            </h2>
-            <p className="text-gray-400 mt-3">
-              Luxury real estate platform untuk hunian dan investasi properti.
+            <Image
+              src="/prime-logo.png"
+              alt="Prime Property"
+              width={170}
+              height={60}
+              className="bg-white rounded-xl p-3"
+            />
+            <p className="text-gray-400 mt-4">
+              Prime Property © 2026. All Rights Reserved.
             </p>
           </div>
 
-          <div>
-            <h3 className="font-bold mb-3">Navigasi</h3>
-            <div className="flex flex-col gap-2 text-gray-400">
-              <a href="#" className="hover:text-[#C9A961]">Beranda</a>
-              <a href="#" className="hover:text-[#C9A961]">Tentang Kami</a>
-              <a href="#" className="hover:text-[#C9A961]">Kontak</a>
-            </div>
+          <div className="text-gray-300">
+            <p>WhatsApp: 08xxxxxxxxxx</p>
+            <p>Email: admin@primeproperty.id</p>
+            <p>Alamat: Indonesia</p>
           </div>
-
-          <div>
-            <h3 className="font-bold mb-3">Kontak</h3>
-            <div className="text-gray-400 space-y-2">
-              <p>WA: 0812-0000-0000</p>
-              <p>Email: admin@primeproperty.id</p>
-              <p>Alamat: Medan, Indonesia</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 mt-8 pt-6 border-t border-white/10 text-gray-500 text-sm">
-          © 2026 Prime Property. All rights reserved.
         </div>
       </footer>
-
     </main>
   );
 }

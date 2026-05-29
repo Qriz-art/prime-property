@@ -198,82 +198,100 @@ export default function PropertyTable({ properties, role }) {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-[#1A1A1A]">
-          <thead className="bg-[#F5F5F5]">
-            <tr className="text-left">
-              <th className="px-6 py-4">Property</th>
-              <th className="px-6 py-4">Group</th>
-              <th className="px-6 py-4">Ukuran</th>
-              <th className="px-6 py-4">Hadap</th>
-              <th className="px-6 py-4">Tipe</th>
-              <th className="px-6 py-4">Tingkat</th>
-              <th className="px-6 py-4">Harga</th>
-              <th className="px-6 py-4">Status</th>
-              {role === "superadmin" && <th className="px-6 py-4">Aksi</th>}
-            </tr>
-          </thead>
+  <table className="w-full text-[#1A1A1A]">
+    <thead className="bg-[#F5F5F5]">
+      <tr className="text-left">
+        <th className="px-6 py-4">Property</th>
+        <th className="px-6 py-4">Group</th>
+        <th className="px-6 py-4">Ukuran</th>
+        <th className="px-6 py-4">Hadap</th>
+        <th className="px-6 py-4">Tipe</th>
+        <th className="px-6 py-4">Tingkat</th>
+        <th className="px-6 py-4">Harga</th>
+        <th className="px-6 py-4">Carport</th>
+        <th className="px-6 py-4">Status</th>
+        <th className="px-6 py-4">Siap</th>
+        <th className="px-6 py-4">Kawasan</th>
 
-          <tbody>
-            {filteredProperties.map((item) => (
-              <tr key={item.id} className="border-t border-gray-200">
-                <td className="px-6 py-4 font-semibold">{item.nama_property}</td>
-                <td className="px-6 py-4">{item.group || "-"}</td>
-                <td className="px-6 py-4">
-                  {item.lebar} x {item.panjang}
-                </td>
-                <td className="px-6 py-4">{item.hadap}</td>
-                <td className="px-6 py-4">{item.tipe}</td>
-                <td className="px-6 py-4">{item.tingkat} Lt</td>
-                <td className="px-6 py-4 font-semibold">
-                  Rp {Number(item.price).toLocaleString("id-ID")}
-                </td>
-                <td className="px-6 py-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      item.status === "in_stock"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    {item.status === "in_stock" ? "In Stock" : "Sold Out"}
-                  </span>
-                </td>
+        {role === "superadmin" && (
+          <th className="px-6 py-4">Aksi</th>
+        )}
+      </tr>
+    </thead>
 
-                {role === "superadmin" && (
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => openEditModal(item)}
-                        className="px-3 py-1 rounded-lg bg-[#C9A961] text-black text-sm font-semibold"
-                      >
-                        Edit
-                      </button>
+    <tbody>
+      {filteredProperties.map((item) => (
+        <tr key={item.id} className="border-t border-gray-200">
+          <td className="px-6 py-4 font-semibold">{item.nama_property}</td>
+          <td className="px-6 py-4">{item.group || "-"}</td>
+          <td className="px-6 py-4">{item.lebar} x {item.panjang}</td>
+          <td className="px-6 py-4">{item.hadap}</td>
+          <td className="px-6 py-4">{item.tipe}</td>
+          <td className="px-6 py-4">{item.tingkat} Lt</td>
+          <td className="px-6 py-4 font-semibold">
+            Rp {Number(item.price).toLocaleString("id-ID")}
+          </td>
+          <td className="px-6 py-4">{item.carport ? "Ya" : "Tidak"}</td>
 
-                      <button
-                        onClick={() => handleDeleteProperty(item.id)}
-                        className="px-3 py-1 rounded-lg bg-[#B33A3A] text-white text-sm font-semibold"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                )}
-              </tr>
-            ))}
+          <td className="px-6 py-4">
+            <span
+              className={`px-3 py-1 rounded-full text-sm ${
+                item.status === "in_stock"
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {item.status === "in_stock" ? "In Stock" : "Sold Out"}
+            </span>
+          </td>
 
-            {filteredProperties.length === 0 && (
-              <tr>
-                <td
-                  colSpan={role === "superadmin" ? 9 : 8}
-                  className="px-6 py-10 text-center text-gray-500"
+          <td className="px-6 py-4">
+            <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+              {item.siap === "siap_huni"
+                ? "Siap Huni"
+                : item.siap === "siap_kosong"
+                ? "Siap Kosong"
+                : "Renovasi"}
+            </span>
+          </td>
+
+          <td className="px-6 py-4">{item.kawasan || "-"}</td>
+
+          {role === "superadmin" && (
+            <td className="px-6 py-4">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => openEditModal(item)}
+                  className="px-3 py-1 rounded-lg bg-[#C9A961] text-black text-sm font-semibold"
                 >
-                  Properti tidak ditemukan.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => handleDeleteProperty(item.id)}
+                  className="px-3 py-1 rounded-lg bg-[#B33A3A] text-white text-sm font-semibold"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          )}
+        </tr>
+      ))}
+
+      {filteredProperties.length === 0 && (
+        <tr>
+          <td
+            colSpan={role === "superadmin" ? 12 : 11}
+            className="px-6 py-10 text-center text-gray-500"
+          >
+            Properti tidak ditemukan.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
       {showModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-6 z-50">
