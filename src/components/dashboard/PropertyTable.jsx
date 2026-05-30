@@ -197,8 +197,8 @@ export default function PropertyTable({ properties, role }) {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-  <table className="w-full text-[#1A1A1A]">
+      <div className="overflow-x-auto pb-2">
+  <table className="w-full min-w-[1050px] text-[#1A1A1A]">
     <thead className="bg-[#F5F5F5]">
       <tr className="text-left">
         <th className="px-6 py-4">Property</th>

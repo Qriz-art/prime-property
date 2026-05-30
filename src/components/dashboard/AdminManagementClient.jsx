@@ -120,12 +120,18 @@ async function handleDeleteAdmin(id) {
                   {new Date(admin.created_at).toLocaleString("id-ID")}
                 </td>
                 <td className="px-6 py-4">
-  <button
-    onClick={() => handleDeleteAdmin(admin.id)}
-    className="px-3 py-1 rounded-lg bg-[#B33A3A] text-white text-sm font-semibold"
-  >
-    Delete
-  </button>
+  {admin.role === "superadmin" ? (
+    <span className="text-sm text-gray-400">
+      Protected
+    </span>
+  ) : (
+    <button
+      onClick={() => handleDeleteAdmin(admin.id)}
+      className="px-3 py-1 rounded-lg bg-[#B33A3A] text-white text-sm font-semibold"
+    >
+      Delete
+    </button>
+  )}
 </td>
               </tr>
             ))}

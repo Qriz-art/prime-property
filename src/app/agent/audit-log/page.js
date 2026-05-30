@@ -16,7 +16,7 @@ export default async function AuditLogPage() {
   const safeLogs = logs || [];
 
   return (
-    <AuthGuard>
+    <AuthGuard allowedRole="superadmin">
       <main className="min-h-screen bg-[#F5F5F5] flex">
         <Sidebar />
 

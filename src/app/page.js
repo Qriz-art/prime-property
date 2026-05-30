@@ -154,20 +154,44 @@ export default async function Home() {
 
           <div className="grid md:grid-cols-4 gap-6 mt-10">
             {[
-              ["Legalitas Aman", "Data properti dikelola rapi dan transparan."],
-              ["Lokasi Strategis", "Listing berada di kawasan potensial."],
-              ["Harga Kompetitif", "Informasi harga jelas dalam rupiah."],
-              ["Tim Profesional", "Didukung sistem internal agent portal."],
-            ].map((item) => (
-              <div
-                key={item[0]}
-                className="bg-[#F5F5F5] rounded-2xl p-6 border border-gray-200"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#C9A961] mb-4" />
-                <h3 className="font-bold text-lg">{item[0]}</h3>
-                <p className="text-gray-600 mt-2">{item[1]}</p>
-              </div>
-            ))}
+  {
+    title: "Legalitas Aman",
+    icon: "📜",
+    desc: "Data properti dikelola rapi dan transparan.",
+  },
+  {
+    title: "Lokasi Strategis",
+    icon: "📍",
+    desc: "Listing berada di kawasan potensial.",
+  },
+  {
+    title: "Harga Kompetitif",
+    icon: "💰",
+    desc: "Informasi harga jelas dalam rupiah.",
+  },
+  {
+    title: "Tim Profesional",
+    icon: "👨‍💼",
+    desc: "Didukung sistem internal agent portal.",
+  },
+].map((item) => (
+  <div
+    key={item.title}
+    className="bg-[#F5F5F5] rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition"
+  >
+    <div className="w-14 h-14 rounded-xl bg-[#C9A961]/15 mb-5 flex items-center justify-center text-3xl">
+      {item.icon}
+    </div>
+
+    <h3 className="font-bold text-xl">
+      {item.title}
+    </h3>
+
+    <p className="text-gray-600 mt-3 leading-7">
+      {item.desc}
+    </p>
+  </div>
+))}
           </div>
         </div>
       </section>

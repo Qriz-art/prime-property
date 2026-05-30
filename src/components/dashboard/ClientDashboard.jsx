@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import Sidebar from "./Sidebar";
 import PropertyTable from "./PropertyTable";
@@ -25,10 +26,10 @@ export default function ClientDashboard({ properties }) {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5] flex">
-      <Sidebar user={user} />
+    <main className="min-h-screen bg-[#F5F5F5] flex overflow-hidden">
+      <Sidebar />
 
-      <section className="flex-1 p-8">
+      <section className="flex-1 min-w-0 p-8">
         <div className="bg-white rounded-2xl p-6 border border-gray-200 mb-6 flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-bold text-[#1A1A1A]">
@@ -40,7 +41,15 @@ export default function ClientDashboard({ properties }) {
             </p>
           </div>
 
-          <div className="w-12 h-12 rounded-full bg-[#C9A961]" />
+          <div className="bg-white rounded-xl p-2 border border-gray-200 shadow-sm">
+  <Image
+    src="/prime-logo.png"
+    alt="Prime Property"
+    width={80}
+    height={40}
+    className="object-contain"
+  />
+</div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mb-6">

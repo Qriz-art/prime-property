@@ -98,22 +98,46 @@ export default function AboutPage() {
         </h2>
 
         <div className="grid md:grid-cols-4 gap-6">
-          {[
-            "Integritas",
-            "Profesionalisme",
-            "Inovasi",
-            "Kepercayaan",
-          ].map((item) => (
-            <div
-              key={item}
-              className="bg-white border rounded-2xl p-8 text-center"
-            >
-              <div className="w-14 h-14 bg-[#C9A961] rounded-xl mx-auto mb-4"></div>
+  {[
+    {
+      title: "Integritas",
+      icon: "🛡️",
+      desc: "Menjunjung tinggi kejujuran dan transparansi dalam setiap layanan.",
+    },
+    {
+      title: "Profesionalisme",
+      icon: "💼",
+      desc: "Memberikan pelayanan terbaik dengan standar kerja profesional.",
+    },
+    {
+      title: "Inovasi",
+      icon: "💡",
+      desc: "Terus berkembang melalui teknologi dan solusi yang modern.",
+    },
+    {
+      title: "Kepercayaan",
+      icon: "🤝",
+      desc: "Membangun hubungan jangka panjang berdasarkan kepercayaan.",
+    },
+  ].map((item) => (
+    <div
+      key={item.title}
+      className="bg-white border border-gray-200 rounded-2xl p-8 text-center hover:shadow-lg transition"
+    >
+      <div className="w-16 h-16 bg-[#C9A961]/15 rounded-2xl mx-auto mb-5 flex items-center justify-center text-3xl">
+        {item.icon}
+      </div>
 
-              <h3 className="font-bold text-xl">{item}</h3>
-            </div>
-          ))}
-        </div>
+      <h3 className="font-bold text-xl text-[#1A1A1A]">
+        {item.title}
+      </h3>
+
+      <p className="text-gray-600 text-sm mt-3 leading-6">
+        {item.desc}
+      </p>
+    </div>
+  ))}
+</div>
       </section>
     </main>
   );
