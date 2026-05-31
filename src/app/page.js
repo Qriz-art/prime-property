@@ -6,11 +6,12 @@ import PublicNavbar from "@/components/PublicNavbar";
 
 export default async function Home() {
   const { data } = await supabase
-    .from("properties")
-    .select("*")
-    .eq("status", "in_stock")
-    .order("id", { ascending: false })
-    .limit(6);
+  .from("properties")
+  .select("*")
+  .eq("status", "in_stock")
+  .is("deleted_at", null)
+  .order("created_at", { ascending: false })
+  .limit(6);
 
   const properties = data || [];
 
