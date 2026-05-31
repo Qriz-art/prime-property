@@ -13,37 +13,74 @@ export default function ContactPage() {
 
   const [toast, setToast] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(e) {
+  e.preventDefault();
 
-    if (!form.nama || !form.email || !form.hp || !form.pesan) {
-      alert("Semua field wajib diisi.");
-      return;
-    }
+  const limitKey = "prime_contact_submit";
+  const now = Date.now();
+  const oneHour = 60 * 60 * 1000;
 
-    if (!form.email.includes("@")) {
-      alert("Email tidak valid.");
-      return;
-    }
+  const history = JSON.parse(localStorage.getItem(limitKey) || "[]");
+  const recentHistory = history.filter((time) => now - time < oneHour);
 
-    if (form.hp.length < 10) {
-      alert("Nomor HP minimum 10 digit.");
-      return;
-    }
-
-    setToast("Pesan terkirim, tim kami akan menghubungi Anda.");
-
-    setForm({
-      nama: "",
-      email: "",
-      hp: "",
-      pesan: "",
-    });
-
-    setTimeout(() => {
-      setToast("");
-    }, 3000);
+  if (recentHistory.length >= 3) {
+    alert("Terlalu banyak mengirim pesan. Coba lagi nanti.");
+    return;
   }
+
+  if (!form.nama || !form.email || !form.hp || !form.pesan) {
+    alert("Semua field wajib diisi.");
+    return;
+  }
+
+  if (!form.email.includes("@")) {
+    alert("Email tidak valid.");
+    return;
+  }
+
+  if (form.hp.length < 10) {
+    alert("Nomor HP minimum 10 digit.");
+    return;
+  }
+
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      nama: form.nama,
+      email: form.email,
+      phone: form.hp,
+      pesan: form.pesan,
+    }),
+  });
+
+  const result = await response.json();
+
+  if (!result.success) {
+    alert(result.message || "Gagal mengirim pesan.");
+    return;
+  }
+
+  localStorage.setItem(
+    limitKey,
+    JSON.stringify([...recentHistory, now])
+  );
+
+  setToast("Pesan terkirim, tim kami akan menghubungi Anda.");
+
+  setForm({
+    nama: "",
+    email: "",
+    hp: "",
+    pesan: "",
+  });
+
+  setTimeout(() => {
+    setToast("");
+  }, 3000);
+}
 
   return (
     <main className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A]">

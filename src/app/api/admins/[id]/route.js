@@ -1,17 +1,27 @@
 import { supabase } from "@/lib/supabase";
+import { rateLimit } from "@/lib/rateLimit";
+import { requireSuperadmin } from "@/lib/auth";
 
 export async function DELETE(request, context) {
-  const { id } = await context.params;
-
-  const body = await request.json();
-
-  const { user } = body;
-
-  if (!user || user.role !== "superadmin") {
+  if (!rateLimit(request)) {
     return Response.json(
       {
         success: false,
-        message: "Forbidden",
+        message: "Terlalu banyak request. Coba lagi nanti.",
+      },
+      { status: 429 }
+    );
+  }
+
+  const { id } = await context.params;
+
+  const user = await requireSuperadmin();
+
+  if (!user) {
+    return Response.json(
+      {
+        success: false,
+        message: "Forbidden: hanya superadmin.",
       },
       { status: 403 }
     );

@@ -9,13 +9,18 @@ import PropertyTable from "./PropertyTable";
 export default function ClientDashboard({ properties }) {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("prime_user");
+ useEffect(() => {
+  async function loadUser() {
+    const response = await fetch("/api/me");
+    const result = await response.json();
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (result.success) {
+      setUser(result.user);
     }
-  }, []);
+  }
+
+  loadUser();
+}, []);
 
   if (!user) {
     return (

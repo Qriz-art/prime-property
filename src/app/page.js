@@ -212,10 +212,26 @@ export default async function Home() {
           </div>
 
           <div className="text-gray-300">
-            <p>WhatsApp: 08xxxxxxxxxx</p>
-            <p>Email: admin@primeproperty.id</p>
-            <p>Alamat: Indonesia</p>
-          </div>
+  <p>WhatsApp: 08123456789</p>
+  <p>Email: admin@primeproperty.id</p>
+  <p>Alamat: Indonesia</p>
+
+  <div className="mt-4 flex flex-col gap-2">
+    <Link
+      href="/about"
+      className="hover:text-[#C9A961] transition"
+    >
+      About Us
+    </Link>
+
+    <Link
+      href="/contact"
+      className="hover:text-[#C9A961] transition"
+    >
+      Contact Us
+    </Link>
+  </div>
+</div>
         </div>
       </footer>
     </main>

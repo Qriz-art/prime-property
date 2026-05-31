@@ -1,25 +1,35 @@
 import { supabase } from "@/lib/supabase";
 import bcrypt from "bcryptjs";
+import { rateLimit } from "@/lib/rateLimit";
+import { requireSuperadmin } from "@/lib/auth";
 
 export async function POST(request) {
-  const body = await request.json();
-
-  const { user, admin } = body;
-
-  if (!user || user.role !== "superadmin") {
+  if (!rateLimit(request)) {
     return Response.json(
       {
         success: false,
-        message: "Forbidden",
+        message: "Terlalu banyak request. Coba lagi nanti.",
+      },
+      { status: 429 }
+    );
+  }
+
+  const user = await requireSuperadmin();
+
+  if (!user) {
+    return Response.json(
+      {
+        success: false,
+        message: "Forbidden: hanya superadmin.",
       },
       { status: 403 }
     );
   }
 
-  const hashedPassword = await bcrypt.hash(
-    admin.password,
-    10
-  );
+  const body = await request.json();
+  const { admin } = body;
+
+  const hashedPassword = await bcrypt.hash(admin.password, 10);
 
   const payload = {
     name: admin.name,

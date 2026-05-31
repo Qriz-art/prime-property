@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -10,17 +11,26 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("prime_user");
+  async function loadUser() {
+    const response = await fetch("/api/me");
+    const result = await response.json();
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (result.success) {
+      setUser(result.user);
     }
-  }, []);
-
-  function handleLogout() {
-    localStorage.removeItem("prime_user");
-    window.location.href = "/agent/login";
   }
+
+  loadUser();
+}, []);
+
+  async function handleLogout() {
+  await fetch("/api/logout", {
+    method: "POST",
+  });
+
+  localStorage.removeItem("prime_user");
+  window.location.href = "/agent/login";
+}
 
   const menus = [
     { name: "Dashboard", path: "/agent/dashboard" },
@@ -33,14 +43,20 @@ export default function Sidebar() {
     return (
       <>
         <div className="px-8 py-7 border-b border-white/10">
-          <h1 className="text-xl font-bold tracking-wide text-[#C9A961]">
-            PRIME PROPERTY
-          </h1>
+  <div className="bg-white rounded-xl p-3 w-fit mb-3">
+    <Image
+      src="/prime-logo.png"
+      alt="Prime Property"
+      width={150}
+      height={55}
+      className="object-contain"
+    />
+  </div>
 
-          <p className="text-gray-400 text-sm mt-1">
-            Internal Agent Portal
-          </p>
-        </div>
+  <p className="text-gray-400 text-sm mt-1">
+    Internal Agent Portal
+  </p>
+</div>
 
         {user && (
           <div className="mx-5 mt-5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3">

@@ -28,7 +28,6 @@ export default function LoginPage() {
       return;
     }
 
-    localStorage.setItem("prime_user", JSON.stringify(result.user));
     window.location.href = "/agent/dashboard";
   }
 

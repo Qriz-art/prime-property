@@ -6,21 +6,24 @@ export default function AuthGuard({ children, allowedRole }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("prime_user");
+    async function checkSession() {
+      const response = await fetch("/api/me");
+      const result = await response.json();
 
-    if (!storedUser) {
-      window.location.href = "/agent/login";
-      return;
+      if (!result.success || !result.user) {
+        window.location.href = "/agent/login";
+        return;
+      }
+
+      if (allowedRole && result.user.role !== allowedRole) {
+        window.location.href = "/agent/dashboard";
+        return;
+      }
+
+      setReady(true);
     }
 
-    const user = JSON.parse(storedUser);
-
-    if (allowedRole && user.role !== allowedRole) {
-      window.location.href = "/agent/dashboard";
-      return;
-    }
-
-    setReady(true);
+    checkSession();
   }, [allowedRole]);
 
   if (!ready) {
