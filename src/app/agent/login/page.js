@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("admin@primeproperty.id");
@@ -35,9 +36,15 @@ export default function LoginPage() {
     <main className="min-h-screen bg-[#1A1A1A] flex items-center justify-center px-6">
       <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl border border-[#C9A961]">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full bg-[#C9A961] mx-auto mb-4 flex items-center justify-center font-bold text-black">
-            PP
-          </div>
+          <div className="mx-auto mb-6 bg-white rounded-xl p-3 w-fit shadow-sm">
+  <Image
+    src="/prime-logo.png"
+    alt="Prime Property"
+    width={120}
+    height={50}
+    className="object-contain"
+  />
+</div>
 
           <h1 className="text-3xl font-bold text-[#1A1A1A]">
             Agent Login
