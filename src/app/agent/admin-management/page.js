@@ -21,8 +21,8 @@ export default async function AdminManagementPage() {
       <main className="min-h-screen bg-[#F5F5F5] flex">
         <Sidebar />
 
-        <section className="flex-1 p-8">
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 mb-6">
+        <section className="p-8 md:ml-72 w-full">
+          <div className="w-full">
             <h1 className="text-3xl font-bold text-[#1A1A1A]">
               Admin Management
             </h1>
