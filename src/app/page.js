@@ -2,17 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import PublicNavbar from "@/components/PublicNavbar";
+import PublicPropertySection from "@/components/PublicPropertySection";
 
 
 export default async function Home() {
   const { data } = await supabase
   .from("properties")
   .select("*")
-  .eq("status", "in_stock")
   .is("deleted_at", null)
+  .eq("status", "in_stock")
   .order("created_at", { ascending: false })
   .limit(6);
-
+  
   const properties = data || [];
 
   return (
@@ -85,67 +86,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="properti" className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex items-end justify-between gap-6 mb-10">
-          <div>
-            <h2 className="text-3xl font-bold">Properti Unggulan</h2>
-            <p className="text-gray-500 mt-2">
-              Data properti aktif langsung dari sistem internal.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {properties.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm"
-            >
-              <div className="flex justify-between gap-4 mb-4">
-                <div>
-                  <h3 className="text-xl font-bold">{item.nama_property}</h3>
-                  <p className="text-gray-500">{item.group || item.kawasan}</p>
-                </div>
-
-                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm h-fit">
-                  In Stock
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 text-sm text-gray-600 border-y py-4">
-                <p>Ukuran: {item.lebar} x {item.panjang}</p>
-                <p>Hadap: {item.hadap}</p>
-                <p>Tipe: {item.tipe}</p>
-                <p>Tingkat: {item.tingkat} Lt</p>
-                <p>Carport: {item.carport ? "Ada" : "Tidak"}</p>
-                <p>Kawasan: {item.kawasan}</p>
-              </div>
-
-              <div className="mt-5 flex items-center justify-between">
-                <p className="text-[#C9A961] font-bold text-lg">
-                  Rp {Number(item.price).toLocaleString("id-ID")}
-                </p>
-
-                {item.maps_link && (
-                  <a
-                    href={item.maps_link}
-                    target="_blank"
-                    className="text-sm font-semibold underline"
-                  >
-                    Maps
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
-
-          {properties.length === 0 && (
-            <div className="col-span-full bg-white rounded-2xl p-10 text-center text-gray-500">
-              Belum ada properti aktif.
-            </div>
-          )}
-        </div>
-      </section>
+      <PublicPropertySection properties={properties} />
 
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-6">
