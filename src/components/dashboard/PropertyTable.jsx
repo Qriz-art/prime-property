@@ -650,9 +650,9 @@ if (!confirmed) return;
 </div>
       </div>
 
-      <div className="overflow-x-auto pb-2">
-  <table className="w-full min-w-[1050px] text-[#1A1A1A]">
-    <thead className="bg-[#F5F5F5]">
+      <div className="overflow-auto max-h-[70vh] pb-2">
+  <table className="w-full min-w-[1250px] text-[#1A1A1A]">
+    <thead className="bg-[#F5F5F5] sticky top-0 z-20">
       <tr className="text-left">
         <th className="px-6 py-4">Property</th>
         <th className="px-6 py-4">Group</th>

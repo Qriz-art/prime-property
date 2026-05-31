@@ -40,28 +40,31 @@ export default function Sidebar() {
   ];
 
   function SidebarContent() {
-    return (
-      <>
-        <div className="px-8 py-7 border-b border-white/10">
-  <div className="bg-white rounded-xl p-3 w-fit mb-3">
-    <Image
-      src="/prime-logo.png"
-      alt="Prime Property"
-      width={150}
-      height={55}
-      className="object-contain"
-    />
-  </div>
+  return (
+    <>
+      <div className="px-8 py-7 border-b border-white/10">
+        <div className="bg-white rounded-xl p-3 w-fit mb-3">
+          <Image
+            src="/prime-logo.png"
+            alt="Prime Property"
+            width={150}
+            height={55}
+            className="object-contain"
+          />
+        </div>
 
-  <p className="text-gray-400 text-sm mt-1">
-    Internal Agent Portal
-  </p>
-</div>
+        <p className="text-gray-400 text-sm mt-1">
+          Internal Agent Portal
+        </p>
+      </div>
 
+      <div className="flex-1 overflow-y-auto">
         {user && (
           <div className="mx-5 mt-5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3">
             <p className="font-semibold text-sm">{user.name}</p>
-            <p className="text-xs text-gray-400 mt-1 capitalize">{user.role}</p>
+            <p className="text-xs text-gray-400 mt-1 capitalize">
+              {user.role}
+            </p>
           </div>
         )}
 
@@ -85,18 +88,19 @@ export default function Sidebar() {
             );
           })}
         </nav>
+      </div>
 
-        <div className="mt-auto p-5 border-t border-white/10">
-          <button
-            onClick={handleLogout}
-            className="w-full border border-[#C9A961] text-[#C9A961] py-3 rounded-xl text-sm font-semibold hover:bg-[#C9A961] hover:text-black transition"
-          >
-            Logout
-          </button>
-        </div>
-      </>
-    );
-  }
+      <div className="p-4 border-t border-white/10">
+        <button
+          onClick={handleLogout}
+          className="w-full rounded-xl border border-[#C9A961] px-4 py-3 text-[#C9A961] font-bold hover:bg-[#C9A961] hover:text-black transition"
+        >
+          Logout
+        </button>
+      </div>
+    </>
+  );
+}
 
   return (
     <>
@@ -107,9 +111,25 @@ export default function Sidebar() {
         ☰
       </button>
 
-      <aside className="w-72 bg-[#1A1A1A] text-white hidden md:flex flex-col border-r border-white/10">
-        <SidebarContent />
-      </aside>
+      <aside
+  className="
+    hidden
+    md:flex
+    fixed
+    left-0
+    top-0
+    h-screen
+    w-72
+    bg-[#1A1A1A]
+    text-white
+    flex-col
+    border-r
+    border-white/10
+    z-40
+  "
+>
+  <SidebarContent />
+</aside>
 
       {open && (
         <div className="md:hidden fixed inset-0 z-50">

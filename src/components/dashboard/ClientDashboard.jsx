@@ -34,7 +34,7 @@ export default function ClientDashboard({ properties }) {
     <main className="min-h-screen bg-[#F5F5F5] flex overflow-hidden">
       <Sidebar />
 
-      <section className="flex-1 min-w-0 p-8">
+      <section className="flex-1 min-w-0 p-8 ml-0 md:ml-72">
         <div className="bg-white rounded-2xl p-6 border border-gray-200 mb-6 flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-bold text-[#1A1A1A]">
