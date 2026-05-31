@@ -103,7 +103,17 @@ useEffect(() => {
       : null;
 
   const kawasanOptions = [...new Set(data.map((item) => item.kawasan).filter(Boolean))];
+function isDirty(field) {
+  if (!editId) return false;
 
+  return String(form[field]) !== String(originalForm[field]);
+}
+
+function dirtyClass(field) {
+  return isDirty(field)
+    ? "border-[#C9A961] bg-[#C9A961]/10"
+    : "";
+}
 const filteredProperties = data.filter((item) => {
   const keyword = debouncedSearch.toLowerCase();
 
@@ -123,17 +133,7 @@ const filteredProperties = data.filter((item) => {
   const matchMinLebar = !minLebar || Number(item.lebar) >= Number(minLebar);
   const matchMaxHarga = !maxHarga || Number(item.price) <= Number(maxHarga);
 
-  function isDirty(field) {
-  if (!editId) return false;
-
-  return String(form[field]) !== String(originalForm[field]);
-}
-
-function dirtyClass(field) {
-  return isDirty(field)
-    ? "border-[#C9A961] bg-[#C9A961]/10"
-    : "";
-}
+  
   return (
     matchSearch &&
     matchStatus &&
