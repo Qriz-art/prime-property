@@ -24,12 +24,7 @@ export default function PublicNavbar() {
           <Link href="/">Beranda</Link>
           <Link href="/about">Tentang Kami</Link>
           <Link href="/contact">Kontak</Link>
-          <Link
-            href="/agent/login"
-            className="border border-[#C9A961] text-[#C9A961] px-5 py-2 rounded-xl hover:bg-[#C9A961] hover:text-black transition"
-          >
-            Login Agent
-          </Link>
+          
         </div>
 
         <button
@@ -45,13 +40,7 @@ export default function PublicNavbar() {
           <Link href="/" onClick={() => setOpen(false)}>Beranda</Link>
           <Link href="/about" onClick={() => setOpen(false)}>Tentang Kami</Link>
           <Link href="/contact" onClick={() => setOpen(false)}>Kontak</Link>
-          <Link
-            href="/agent/login"
-            onClick={() => setOpen(false)}
-            className="border border-[#C9A961] text-[#C9A961] px-5 py-2 rounded-xl text-center"
-          >
-            Login Agent
-          </Link>
+          
         </div>
       )}
     </header>

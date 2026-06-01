@@ -72,7 +72,7 @@ export default function PublicPropertySection({ properties }) {
           </p>
         </div>
 
-        <div className="w-full lg:w-[430px]">
+        <div className="w-full lg:w-[430px] relative">
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
@@ -92,7 +92,26 @@ export default function PublicPropertySection({ properties }) {
           </div>
 
           {showFilter && (
-            <div className="mt-4 bg-white border border-gray-200 rounded-2xl p-4 grid gap-3 shadow-sm">
+  <div
+    className="
+  absolute
+  top-[140px]
+  sm:top-[85px]
+  right-0
+  z-50
+  w-full
+  max-h-[70vh]
+  overflow-y-auto
+  bg-white
+  border
+  border-gray-200
+  rounded-2xl
+  p-4
+  grid
+  gap-3
+  shadow-xl
+"
+  >
               <select
                 value={kawasan}
                 onChange={(e) => setKawasan(e.target.value)}
@@ -170,17 +189,11 @@ export default function PublicPropertySection({ properties }) {
         </div>
       </div>
 
-      <div className="mb-5 flex items-center justify-between gap-4">
-        <p className="text-sm text-gray-500">
-          Menampilkan {list.length} properti
-        </p>
-
-        {loading && (
-          <p className="text-sm text-gray-500">
-            Memuat...
-          </p>
-        )}
-      </div>
+      {loading && (
+  <div className="mb-5 text-center text-gray-500 text-sm">
+    Memuat...
+  </div>
+)}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {list.map((item) => (
